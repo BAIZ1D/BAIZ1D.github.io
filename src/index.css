@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    @apply bg-zinc-50 text-black;
+  }
+  
+  .mono {
+    font-family: 'Space Mono', monospace;
+  }
+}
+
+/* Custom Neo-brutalist buttons/cards dynamic hover classes */
+.neo-card {
+  @apply border-4 border-black bg-white shadow-neo transition-all duration-200;
+}
+
+.neo-card-hover {
+  @apply hover:-translate-x-1 hover:-translate-y-1 hover:shadow-neoLg active:translate-x-0 active:translate-y-0 active:shadow-neo;
+}
+
+.neo-btn {
+  @apply border-4 border-black font-bold uppercase shadow-neo transition-all duration-100 flex items-center justify-center gap-2;
+}
+
+.neo-btn-hover {
+  @apply hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-neoLg active:translate-x-0.5 active:translate-y-0.5 active:shadow-neoActive;
+}
