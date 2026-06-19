@@ -42,6 +42,10 @@ function App() {
   const [copied, setCopied] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
+  const currentYear = new Date().getFullYear();
+  const isGraduated = new Date() >= new Date('2028-04-01');
+  const masterPeriod = isGraduated ? 'April 2026 - April 2028' : 'April 2026 - Present (Expected April 2028)';
+
   const bibtexCitation = `@inproceedings{alhamid2026automating,
   title={Automating Legal Statute Matching in Online Petition Systems},
   author={Al Hamid, Baizid and Kovacs, Mate and Salama, Shady and Serd{\\u}lt, Uwe},
@@ -215,7 +219,7 @@ function App() {
               <div className="relative pl-6 border-l-2 border-black">
                 <span className="absolute -left-[9px] top-1 w-4 h-4 bg-neoCyan border-2 border-black rounded-full"></span>
                 <div className="font-bold text-sm">Ritsumeikan University</div>
-                <div className="text-xs text-zinc-500 font-bold mb-1">Master of Engineering (M.E.) · April 2026 - Present (Expected April 2028)</div>
+                <div className="text-xs text-zinc-500 font-bold mb-1">Master of Engineering (M.E.) · {masterPeriod}</div>
                 <p className="text-xs font-semibold text-zinc-700">
                   Graduate School of Information Science and Engineering.
                   <span className="block mt-2">
@@ -547,7 +551,7 @@ function App() {
 
       {/* Footer Container */}
       <footer className="max-w-6xl mx-auto mt-12 text-center text-xs font-extrabold text-zinc-400 uppercase py-6 border-t-4 border-black print:hidden">
-        <div>© 2026 Baizid Al Hamid. All rights reserved.</div>
+        <div>© {currentYear} Baizid Al Hamid. All rights reserved.</div>
       </footer>
 
       {/* Printable CV Container (Hidden on screen, visible only on print) */}
@@ -577,7 +581,7 @@ function App() {
                 <div>
                   <div className="font-bold text-black text-[10px]">Ritsumeikan University</div>
                   <div className="text-[9px] text-zinc-500 font-bold">Master of Engineering (M.E.)</div>
-                  <div className="text-[9px] text-zinc-500 font-bold mb-1">April 2026 - Present (Expected 2028)</div>
+                  <div className="text-[9px] text-zinc-500 font-bold mb-1">{masterPeriod}</div>
                   <p className="text-[9px] text-zinc-700 leading-tight text-justify">
                     Graduate School of Info. Science & Eng. Specializing in Information Science and Engineering, focusing heavily on Machine Learning, NLP, and Legal Text alignment.
                   </p>
