@@ -194,15 +194,21 @@ function App() {
                 <div className="font-bold text-sm">Ritsumeikan University</div>
                 <div className="text-xs text-zinc-500 font-bold mb-1">Bachelor of Engineering (B.E.) · April 2022 - April 2026</div>
                 <p className="text-xs font-semibold text-zinc-700">
-                  Major in Information Systems Science and Engineering. Standardized on advanced data structures, computational algorithms, and system architecture.
+                  Major in Information Systems Science and Engineering.
+                  <span className="block mt-2">
+                    Standardized on advanced data structures, computational algorithms, and system architecture.
+                  </span>
                 </p>
               </div>
               <div className="relative pl-6 border-l-2 border-black">
                 <span className="absolute -left-[9px] top-1 w-4 h-4 bg-neoCyan border-2 border-black rounded-full"></span>
                 <div className="font-bold text-sm">Ritsumeikan University</div>
-                <div className="text-xs text-zinc-500 font-bold mb-1">Master of Science (M.S.) · April 2026 - Present (Expected April 2028)</div>
+                <div className="text-xs text-zinc-500 font-bold mb-1">Master of Engineering (M.E.) · April 2026 - Present (Expected April 2028)</div>
                 <p className="text-xs font-semibold text-zinc-700">
-                  Graduate School of Information Science and Engineering. Specializing in Information Science and Engineering, focusing heavily on Machine Learning, Natural Language Processing, and Legal Text alignment.
+                  Graduate School of Information Science and Engineering.
+                  <span className="block mt-2">
+                    Specializing in Information Science and Engineering, focusing heavily on Machine Learning, Natural Language Processing, and Legal Text alignment.
+                  </span>
                 </p>
               </div>
             </div>
