@@ -128,7 +128,19 @@ function App() {
   const filteredExperience = workExperience.filter(job => activeExpTab === 'all' || job.category === activeExpTab);
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] text-black p-4 md:p-8 selection:bg-neoYellow print:bg-white print:p-0">
+    <div className="min-h-screen bg-[#F3F4F6] text-black selection:bg-neoYellow print:bg-white print:p-0">
+      
+      {/* Infinite Scrolling Ticker (Hidden on Print) */}
+      <div className="w-full bg-black text-[#FACC15] border-b-4 border-black overflow-hidden py-2.5 print:hidden font-mono uppercase text-xs tracking-widest font-extrabold shadow-[0_4px_0_0_rgba(0,0,0,1)] relative z-10">
+        <div className="flex whitespace-nowrap animate-marquee">
+          <span className="px-4">✦ AI Engineer & SaaS Developer ✦ Ritsumeikan University ✦ Open Source Contributor ✦ Osaka, Japan ✦</span>
+          <span className="px-4">✦ AI Engineer & SaaS Developer ✦ Ritsumeikan University ✦ Open Source Contributor ✦ Osaka, Japan ✦</span>
+          <span className="px-4">✦ AI Engineer & SaaS Developer ✦ Ritsumeikan University ✦ Open Source Contributor ✦ Osaka, Japan ✦</span>
+          <span className="px-4">✦ AI Engineer & SaaS Developer ✦ Ritsumeikan University ✦ Open Source Contributor ✦ Osaka, Japan ✦</span>
+        </div>
+      </div>
+
+      <div className="p-4 md:p-8 print:hidden">
       
       {/* Header Container */}
       <header className="max-w-6xl mx-auto mb-8 print:hidden">
@@ -339,7 +351,7 @@ function App() {
             {/* Projects list */}
             <div className="grid grid-cols-1 gap-6">
               {filteredProjects.map(project => (
-                <article key={project.title} className="neo-card bg-white p-6 relative overflow-hidden">
+                <article key={project.title} className="neo-card neo-card-hover bg-white p-6 relative overflow-hidden">
                   <div className="absolute top-0 right-0 border-l-4 border-b-4 border-black px-3 py-1 font-bold uppercase text-xs bg-zinc-100 shadow-sm">
                     {project.type}
                   </div>
@@ -411,7 +423,7 @@ function App() {
             <div className="flex flex-col gap-6">
               {/* Research & Publications Highlight */}
               {(activePubTab === 'all' || activePubTab === 'publications') && (
-                <article className="neo-card bg-neoOrange p-6 text-black">
+                <article className="neo-card neo-card-hover bg-neoOrange p-6 text-black">
                   <h2 className="text-2xl font-bold uppercase mb-3 flex items-center gap-2">
                     <FileText size={22} /> Research Publication
                   </h2>
@@ -449,7 +461,7 @@ function App() {
 
               {/* Published Dataset Highlight */}
               {(activePubTab === 'all' || activePubTab === 'datasets') && (
-                <article className="neo-card bg-neoCyan p-6 text-black">
+                <article className="neo-card neo-card-hover bg-neoCyan p-6 text-black">
                   <h2 className="text-2xl font-bold uppercase mb-3 flex items-center gap-2">
                     <Database size={22} /> Published Dataset
                   </h2>
@@ -520,7 +532,7 @@ function App() {
             
             <div className="flex flex-col gap-6">
               {filteredExperience.map(job => (
-                <div key={job.role + job.company} className="neo-card bg-white p-6">
+                <div key={job.role + job.company} className="neo-card neo-card-hover bg-white p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-black pb-2 mb-3">
                     <div>
                       <h3 className="font-extrabold text-lg uppercase leading-tight">{job.role}</h3>
@@ -553,6 +565,7 @@ function App() {
       <footer className="max-w-6xl mx-auto mt-12 text-center text-xs font-extrabold text-zinc-400 uppercase py-6 border-t-4 border-black print:hidden">
         <div>© {currentYear} Baizid Al Hamid. All rights reserved.</div>
       </footer>
+      </div>
 
       {/* Printable CV Container (Hidden on screen, visible only on print) */}
       <div className="hidden print:block bg-white text-black p-8 font-sans text-xs max-w-[21cm] mx-auto leading-relaxed">
