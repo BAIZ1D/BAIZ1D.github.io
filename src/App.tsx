@@ -396,6 +396,46 @@ function App() {
             </div>
           </section>
 
+          <hr className="border-t-4 border-black" />
+
+          {/* Published Dataset Highlight */}
+          <section className="neo-card bg-neoCyan p-6 text-black">
+            <h2 className="text-2xl font-bold uppercase mb-3 flex items-center gap-2">
+              <Database size={22} /> Published Dataset
+            </h2>
+            <div className="bg-white border-4 border-black p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+              <h3 className="font-extrabold text-lg uppercase mb-1 leading-tight">
+                Dataset for Automating Legal Statute Matching in UK Online Petition Systems
+              </h3>
+              <p className="text-xs font-bold text-zinc-500 mb-3 uppercase">
+                Zenodo Repository · DOI: 10.5281/zenodo.18745175
+              </p>
+              <p className="text-xs text-zinc-800 mb-4 font-semibold leading-relaxed">
+                A curated textual corpus of UK parliamentary acts processed via OCR and regular expressions, accompanied by a ground-truth evaluation set of 65 authentic citizen e-petitions mapped to expert statutory citations.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <a 
+                  href="https://doi.org/10.5281/zenodo.18745175" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="neo-btn neo-btn-hover bg-neoYellow px-3.5 py-1.5 text-xs font-bold"
+                >
+                  <ExternalLink size={12} /> Zenodo DOI
+                </a>
+                <a 
+                  href="https://huggingface.co/datasets/BA1Z1D/uk-petitions-legislations-matching" 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="neo-btn neo-btn-hover bg-black text-white px-3.5 py-1.5 text-xs font-bold"
+                >
+                  Hugging Face Datasets
+                </a>
+              </div>
+            </div>
+          </section>
+
+          <hr className="border-t-4 border-black" />
+
           {/* Work Experience Section */}
           <section className="flex flex-col gap-6">
             <div className="neo-card bg-white p-4">
