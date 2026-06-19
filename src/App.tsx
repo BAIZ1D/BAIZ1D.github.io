@@ -32,11 +32,13 @@ interface Job {
   period: string;
   desc: string;
   tags: string[];
+  category: 'it' | 'teaching' | 'hospitality';
 }
 
 function App() {
   const [activeTab, setActiveTab] = useState<'all' | 'public' | 'private'>('all');
   const [activePubTab, setActivePubTab] = useState<'all' | 'publications' | 'datasets'>('all');
+  const [activeExpTab, setActiveExpTab] = useState<'it' | 'teaching' | 'hospitality' | 'all'>('all');
   const [copied, setCopied] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
@@ -89,32 +91,37 @@ function App() {
       company: '株式会社ジオリゾーム (GeoRhizome)',
       period: 'April 2026 - Present',
       desc: 'Developing localized document ingestion, multi-modal knowledge base querying pipelines, and secure enterprise AI/RAG solutions.',
-      tags: ['Python', 'Llama.cpp', 'RAG', 'Docker', 'NLP']
+      tags: ['Python', 'Llama.cpp', 'RAG', 'Docker', 'NLP'],
+      category: 'it'
     },
     {
       role: 'Creator & Lead Developer',
       company: 'BaitoTracker SaaS',
       period: 'January 2026 - Present',
       desc: 'Architected and deployed a multi-platform application helping international students compute tax limits, work shifts, and pay calculations.',
-      tags: ['React Native', 'TypeScript', 'Supabase', 'SaaS']
+      tags: ['React Native', 'TypeScript', 'Supabase', 'SaaS'],
+      category: 'it'
     },
     {
       role: 'English Second Language Instructor',
       company: 'POC Field & RareJob Inc.',
       period: 'February 2024 - Present',
       desc: 'Leading vocabulary and conversational coaching sessions for business professionals and language students in Japan.',
-      tags: ['ESL Instruction', 'Coaching', 'Communications']
+      tags: ['ESL Instruction', 'Coaching', 'Communications'],
+      category: 'teaching'
     },
     {
       role: 'Luxury Hospitality Specialist',
       company: 'The Ritz-Carlton & Four Seasons Kyoto',
       period: 'November 2022 - October 2023',
       desc: 'Maintained detail-oriented service standards in world-class catering and client management. Transformed this high-end service mindset into a "user-first" product engineering ethos.',
-      tags: ['Client Relations', 'Quality Assurance', 'Hospitality Ethos']
+      tags: ['Client Relations', 'Quality Assurance', 'Hospitality Ethos'],
+      category: 'hospitality'
     }
   ];
 
   const filteredProjects = projects.filter(p => activeTab === 'all' || p.type === activeTab);
+  const filteredExperience = workExperience.filter(job => activeExpTab === 'all' || job.category === activeExpTab);
 
   return (
     <div className="min-h-screen bg-[#F3F4F6] text-black p-4 md:p-8 selection:bg-neoYellow">
@@ -483,14 +490,27 @@ function App() {
 
           {/* Work Experience Section */}
           <section className="flex flex-col gap-6">
-            <div className="neo-card bg-white p-4">
+            <div className="neo-card bg-white p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <h2 className="text-2xl font-bold uppercase flex items-center gap-2">
                 <Briefcase size={22} /> Professional Experience
               </h2>
+              <div className="flex border-2 border-black p-0.5 bg-zinc-100 rounded-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                {(['it', 'teaching', 'hospitality', 'all'] as const).map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveExpTab(tab)}
+                    className={`px-3 py-1 font-bold uppercase text-xs transition-colors ${
+                      activeExpTab === tab ? 'bg-black text-white' : 'hover:bg-zinc-200 text-black'
+                    }`}
+                  >
+                    {tab === 'it' ? 'IT' : tab}
+                  </button>
+                ))}
+              </div>
             </div>
             
             <div className="flex flex-col gap-6">
-              {workExperience.map(job => (
+              {filteredExperience.map(job => (
                 <div key={job.role + job.company} className="neo-card bg-white p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b-2 border-black pb-2 mb-3">
                     <div>
