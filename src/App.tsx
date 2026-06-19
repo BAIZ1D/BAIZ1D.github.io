@@ -38,7 +38,7 @@ interface Job {
 function App() {
   const [activeTab, setActiveTab] = useState<'all' | 'public' | 'private'>('all');
   const [activePubTab, setActivePubTab] = useState<'all' | 'publications' | 'datasets'>('all');
-  const [activeExpTab, setActiveExpTab] = useState<'it' | 'teaching' | 'hospitality' | 'all'>('all');
+  const [activeExpTab, setActiveExpTab] = useState<'it' | 'teaching' | 'hospitality' | 'all'>('it');
   const [copied, setCopied] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
