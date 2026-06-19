@@ -228,7 +228,7 @@ function App() {
               </div>
               <div className="border-l-4 border-neoCyan pl-2 py-1">
                 <span className="font-extrabold text-black">Secondary School Certificate Scholarship</span><br/>
-                National scholarship for academic excellence.
+                National scholarship for academic excellence awarded by the Bangladesh Government.
               </div>
             </div>
           </section>
@@ -378,6 +378,8 @@ function App() {
             </div>
           </section>
 
+          <hr className="border-t-4 border-black" />
+
           {/* Research & Publications Highlight */}
           <section className="neo-card bg-neoOrange p-6 text-black">
             <h2 className="text-2xl font-bold uppercase mb-3 flex items-center gap-2">
@@ -440,7 +442,7 @@ function App() {
 
       {/* Footer Container */}
       <footer className="max-w-6xl mx-auto mt-12 text-center text-xs font-extrabold text-zinc-400 uppercase py-6 border-t-4 border-black">
-        <div>© 2026 Baizid Al Hamid. All rights reserved. Designed in Neo-Brutalist layout.</div>
+        <div>© 2026 Baizid Al Hamid. All rights reserved.</div>
       </footer>
 
     </div>
