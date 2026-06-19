@@ -578,7 +578,7 @@ function App() {
                   <div className="font-bold text-black text-[10px]">Ritsumeikan University</div>
                   <div className="text-[9px] text-zinc-500 font-bold">Master of Engineering (M.E.)</div>
                   <div className="text-[9px] text-zinc-500 font-bold mb-1">April 2026 - Present (Expected 2028)</div>
-                  <p className="text-[9px] text-zinc-700 leading-tight">
+                  <p className="text-[9px] text-zinc-700 leading-tight text-justify">
                     Graduate School of Info. Science & Eng. Specializing in Information Science and Engineering, focusing heavily on Machine Learning, NLP, and Legal Text alignment.
                   </p>
                 </div>
@@ -586,7 +586,7 @@ function App() {
                   <div className="font-bold text-black text-[10px]">Ritsumeikan University</div>
                   <div className="text-[9px] text-zinc-500 font-bold">Bachelor of Engineering (B.E.)</div>
                   <div className="text-[9px] text-zinc-500 font-bold mb-1">April 2022 - April 2026</div>
-                  <p className="text-[9px] text-zinc-700 leading-tight">
+                  <p className="text-[9px] text-zinc-700 leading-tight text-justify">
                     Major in Information Systems Science and Engineering. Standardized on advanced data structures, computational algorithms, and system architecture.
                   </p>
                 </div>
@@ -636,12 +636,12 @@ function App() {
               <div className="flex flex-col gap-4">
                 {workExperience.map(job => (
                   <div key={job.role + job.company}>
-                    <div className="flex justify-between items-baseline mb-0.5">
+                    <div className="flex justify-between items-baseline gap-2 mb-0.5">
                       <span className="font-bold text-black text-[10px]">{job.role}</span>
-                      <span className="text-[8px] text-zinc-500 font-bold">{job.period}</span>
+                      <span className="text-[8px] text-zinc-500 font-bold shrink-0">{job.period}</span>
                     </div>
                     <div className="text-[9px] font-bold text-zinc-600 mb-1">{job.company}</div>
-                    <p className="text-[9px] text-zinc-700 leading-relaxed">{job.desc}</p>
+                    <p className="text-[9px] text-zinc-700 leading-relaxed text-justify">{job.desc}</p>
                   </div>
                 ))}
               </div>
@@ -653,11 +653,11 @@ function App() {
               <div className="flex flex-col gap-3">
                 {projects.map(proj => (
                   <div key={proj.title}>
-                    <div className="flex justify-between items-baseline mb-0.5">
+                    <div className="flex justify-between items-baseline gap-2 mb-0.5">
                       <span className="font-bold text-black text-[10px]">{proj.title}</span>
-                      <span className="text-[8px] text-zinc-500 font-bold">{proj.stack.join(', ')}</span>
+                      <span className="text-[8px] text-zinc-500 font-bold text-right shrink-0">{proj.stack.join(', ')}</span>
                     </div>
-                    <p className="text-[9px] text-zinc-700 leading-normal">{proj.desc}</p>
+                    <p className="text-[9px] text-zinc-700 leading-normal text-justify">{proj.desc}</p>
                   </div>
                 ))}
               </div>
