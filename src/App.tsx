@@ -124,7 +124,7 @@ function App() {
         <div className="neo-card bg-neoYellow p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             <div className="w-24 h-24 md:w-28 md:h-28 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden shrink-0">
-              <img src={profileImg} alt="Baizid Al Hamid" className="w-full h-full object-cover object-top" />
+              <img src={profileImg} alt="Baizid Al Hamid" className="w-full h-full object-cover" style={{ objectPosition: 'center 20%' }} />
             </div>
             <div>
               <div className="inline-block border-2 border-black bg-white px-3 py-1 font-bold uppercase text-xs mb-3 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
