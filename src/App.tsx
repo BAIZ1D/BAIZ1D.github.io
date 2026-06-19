@@ -77,8 +77,7 @@ function App() {
       type: 'public',
       desc: 'A hybrid Information Retrieval and NLP framework automating legal statute matching in online petition systems. Evaluates cross-domain matching between citizen lay queries and structural statutory law.',
       stack: ['Python', 'PyTorch', 'Transformers', 'Qdrant (Vector DB)', 'BM25', 'spaCy', 'Blackstone'],
-      repoLink: 'https://github.com/BAIZ1D/petition-legislation-matching',
-      citation: bibtexCitation
+      repoLink: 'https://github.com/BAIZ1D/petition-legislation-matching'
     }
   ];
 
@@ -354,25 +353,6 @@ function App() {
                       </a>
                     )}
                   </div>
-
-                  {/* Bibliographic information for Research Projects */}
-                  {project.citation && (
-                    <div className="mt-6 border-t-2 border-black pt-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-extrabold text-xs uppercase text-zinc-500">Academic Citation</span>
-                        <button 
-                          onClick={() => copyToClipboard(project.citation || '', 'bibtex')}
-                          className="flex items-center gap-1 border border-black bg-zinc-100 hover:bg-zinc-200 px-2 py-0.5 text-[10px] font-bold"
-                        >
-                          {copied ? <Check size={10} /> : <Copy size={10} />}
-                          {copied ? 'Copied' : 'Copy BibTeX'}
-                        </button>
-                      </div>
-                      <pre className="mono bg-zinc-50 border border-black p-3 text-[10px] text-zinc-800 overflow-x-auto whitespace-pre leading-normal">
-                        {project.citation}
-                      </pre>
-                    </div>
-                  )}
                 </article>
               ))}
             </div>
@@ -395,8 +375,23 @@ function App() {
               <p className="text-xs text-zinc-800 mb-4 font-semibold leading-relaxed">
                 Evaluating structural statutory law alignment with citizen lay queries via a hybrid retrieval pipeline. Explores the impact of deep semantic retrieval systems combined with lexical BM25 matching.
               </p>
-              <div className="text-xs font-bold">
+              <div className="text-xs font-bold mb-4">
                 Collaborators: <span className="underline">Baizid Al Hamid</span>, Mate Kovacs, Shady Salama, Uwe Serdült.
+              </div>
+              <div className="border-t-2 border-black pt-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-extrabold text-xs uppercase text-zinc-500">Academic Citation (BibTeX)</span>
+                  <button 
+                    onClick={() => copyToClipboard(bibtexCitation, 'bibtex')}
+                    className="flex items-center gap-1 border border-black bg-zinc-100 hover:bg-zinc-200 px-2.5 py-1 text-[10px] font-bold shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none"
+                  >
+                    {copied ? <Check size={10} /> : <Copy size={10} />}
+                    {copied ? 'Copied BibTeX!' : 'Copy BibTeX'}
+                  </button>
+                </div>
+                <pre className="mono bg-zinc-50 border border-black p-3 text-[10px] text-zinc-800 overflow-x-auto whitespace-pre leading-normal">
+                  {bibtexCitation}
+                </pre>
               </div>
             </div>
           </section>
