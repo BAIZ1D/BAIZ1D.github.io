@@ -124,10 +124,10 @@ function App() {
   const filteredExperience = workExperience.filter(job => activeExpTab === 'all' || job.category === activeExpTab);
 
   return (
-    <div className="min-h-screen bg-[#F3F4F6] text-black p-4 md:p-8 selection:bg-neoYellow">
+    <div className="min-h-screen bg-[#F3F4F6] text-black p-4 md:p-8 selection:bg-neoYellow print:bg-white print:p-0">
       
       {/* Header Container */}
-      <header className="max-w-6xl mx-auto mb-8">
+      <header className="max-w-6xl mx-auto mb-8 print:hidden">
         <div className="neo-card bg-neoYellow p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
             <div className="w-24 h-24 md:w-28 md:h-28 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden shrink-0">
@@ -158,12 +158,17 @@ function App() {
             >
               <svg className="w-4 h-4 fill-current inline" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg> github/BAIZ1D
             </a>
+            <button 
+              onClick={() => window.print()}
+              className="neo-btn neo-btn-hover bg-neoOrange text-black py-2 text-sm flex items-center justify-center gap-2 border-2"
+            >
+              <FileText size={16} /> Download CV
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Grid Layout */}
-      <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 print:hidden">
         
         {/* Left Column: Profile Card + Tech Stack */}
         <div className="lg:col-span-1 flex flex-col gap-8">
@@ -541,9 +546,125 @@ function App() {
       </main>
 
       {/* Footer Container */}
-      <footer className="max-w-6xl mx-auto mt-12 text-center text-xs font-extrabold text-zinc-400 uppercase py-6 border-t-4 border-black">
+      <footer className="max-w-6xl mx-auto mt-12 text-center text-xs font-extrabold text-zinc-400 uppercase py-6 border-t-4 border-black print:hidden">
         <div>© 2026 Baizid Al Hamid. All rights reserved.</div>
       </footer>
+
+      {/* Printable CV Container (Hidden on screen, visible only on print) */}
+      <div className="hidden print:block bg-white text-black p-8 font-sans text-xs max-w-[21cm] mx-auto leading-relaxed">
+        {/* Header */}
+        <div className="text-center border-b-2 border-black pb-4 mb-4">
+          <h1 className="text-3xl font-bold uppercase tracking-tight mb-1">Baizid Al Hamid</h1>
+          <p className="text-sm font-semibold uppercase mb-2 text-zinc-600">AI Engineer & SaaS Developer</p>
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-zinc-700 font-semibold">
+            <span>Osaka, Japan</span>
+            <span>•</span>
+            <span>baizid.al.hamid@gmail.com</span>
+            <span>•</span>
+            <span>github.com/BAIZ1D</span>
+            <span>•</span>
+            <span>linkedin.com/in/baizidalhamid</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-3 gap-6">
+          {/* Left Column (1/3 width): Education, Skills, Languages */}
+          <div className="col-span-1 border-r border-zinc-300 pr-6 flex flex-col gap-5">
+            {/* Education */}
+            <div>
+              <h2 className="text-xs font-bold uppercase border-b-2 border-black pb-1 mb-2">Education</h2>
+              <div className="flex flex-col gap-3">
+                <div>
+                  <div className="font-bold text-black text-[10px]">Ritsumeikan University</div>
+                  <div className="text-[9px] text-zinc-500 font-bold">Master of Engineering (M.E.)</div>
+                  <div className="text-[9px] text-zinc-500 font-bold mb-1">April 2026 - Present (Expected 2028)</div>
+                  <p className="text-[9px] text-zinc-700 leading-tight">
+                    Graduate School of Info. Science & Eng. Specializing in Information Science and Engineering, focusing heavily on Machine Learning, NLP, and Legal Text alignment.
+                  </p>
+                </div>
+                <div>
+                  <div className="font-bold text-black text-[10px]">Ritsumeikan University</div>
+                  <div className="text-[9px] text-zinc-500 font-bold">Bachelor of Engineering (B.E.)</div>
+                  <div className="text-[9px] text-zinc-500 font-bold mb-1">April 2022 - April 2026</div>
+                  <p className="text-[9px] text-zinc-700 leading-tight">
+                    Major in Information Systems Science and Engineering. Standardized on advanced data structures, computational algorithms, and system architecture.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Technical Skills */}
+            <div>
+              <h2 className="text-xs font-bold uppercase border-b-2 border-black pb-1 mb-2">Technical Skills</h2>
+              <div className="flex flex-col gap-2.5 text-[9px]">
+                <div>
+                  <div className="font-bold text-zinc-600 uppercase text-[8px]">Languages</div>
+                  <div className="font-semibold text-zinc-800">TypeScript, JavaScript, Python, Bash, Java, C++</div>
+                </div>
+                <div>
+                  <div className="font-bold text-zinc-600 uppercase text-[8px]">Full-Stack & UI</div>
+                  <div className="font-semibold text-zinc-800">React Native, React, Next.js, Node.js, Express, Tailwind CSS</div>
+                </div>
+                <div>
+                  <div className="font-bold text-zinc-600 uppercase text-[8px]">ML & NLP</div>
+                  <div className="font-semibold text-zinc-800">PyTorch, Transformers, spaCy, Blackstone</div>
+                </div>
+                <div>
+                  <div className="font-bold text-zinc-600 uppercase text-[8px]">Cloud & DB</div>
+                  <div className="font-semibold text-zinc-800">Supabase, PostgreSQL, Cloud Firestore, Qdrant</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Languages */}
+            <div>
+              <h2 className="text-xs font-bold uppercase border-b-2 border-black pb-1 mb-2">Languages</h2>
+              <div className="flex flex-col gap-1 text-[9px] font-semibold text-zinc-800">
+                <div>English (Native)</div>
+                <div>Bengali (Native)</div>
+                <div>Japanese (Professional Working)</div>
+                <div>Hindi & Urdu (Professional)</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column (2/3 width): Experience, Projects */}
+          <div className="col-span-2 flex flex-col gap-5">
+            {/* Experience */}
+            <div>
+              <h2 className="text-xs font-bold uppercase border-b-2 border-black pb-1 mb-2">Work Experience</h2>
+              <div className="flex flex-col gap-4">
+                {workExperience.map(job => (
+                  <div key={job.role + job.company}>
+                    <div className="flex justify-between items-baseline mb-0.5">
+                      <span className="font-bold text-black text-[10px]">{job.role}</span>
+                      <span className="text-[8px] text-zinc-500 font-bold">{job.period}</span>
+                    </div>
+                    <div className="text-[9px] font-bold text-zinc-600 mb-1">{job.company}</div>
+                    <p className="text-[9px] text-zinc-700 leading-relaxed">{job.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Selected Projects */}
+            <div>
+              <h2 className="text-xs font-bold uppercase border-b-2 border-black pb-1 mb-2">Key Projects</h2>
+              <div className="flex flex-col gap-3">
+                {projects.map(proj => (
+                  <div key={proj.title}>
+                    <div className="flex justify-between items-baseline mb-0.5">
+                      <span className="font-bold text-black text-[10px]">{proj.title}</span>
+                      <span className="text-[8px] text-zinc-500 font-bold">{proj.stack.join(', ')}</span>
+                    </div>
+                    <p className="text-[9px] text-zinc-700 leading-normal">{proj.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   );
