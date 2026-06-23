@@ -13,7 +13,13 @@ import {
   GraduationCap, 
   Briefcase,
   Languages,
-  Award
+  Award,
+  Play,
+  Pause,
+  Square,
+  SkipForward,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 
 interface Project {
@@ -41,6 +47,67 @@ function App() {
   const [activeExpTab, setActiveExpTab] = useState<'it' | 'teaching' | 'hospitality' | 'all'>('it');
   const [copied, setCopied] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+
+  // Cassette Tape Deck State
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [volume, setVolume] = useState(0.5);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isFastForwarding, setIsFastForwarding] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const tapeTracks = [
+    { title: "Retro Synthwave Loop", artist: "Helix Synth", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { title: "8-Bit Adventure", artist: "Helix Chip", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { title: "Cyberpunk Highway", artist: "Helix Drive", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { title: "Neo-Tokyo Night", artist: "Helix Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
+  ];
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = isMuted ? 0 : volume;
+    }
+  }, [volume, isMuted]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play().catch(err => {
+          console.log("Audio play blocked/failed:", err);
+          setIsPlaying(false);
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying, currentTrackIndex]);
+
+  const handlePlayPause = () => {
+    if (isMuted && !isPlaying) {
+      setIsMuted(false);
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleStop = () => {
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  const handleNextTrack = () => {
+    setIsFastForwarding(true);
+    setTimeout(() => {
+      setIsFastForwarding(false);
+      setCurrentTrackIndex((prev) => (prev + 1) % tapeTracks.length);
+      setIsPlaying(true);
+    }, 500);
+  };
+
+  const handleAudioEnded = () => {
+    setCurrentTrackIndex((prev) => (prev + 1) % tapeTracks.length);
+  };
 
   const [consoleTab, setConsoleTab] = useState<'overview' | 'terminal'>('overview');
   const [terminalLogs, setTerminalLogs] = useState<Array<{ type: 'input' | 'output'; text: string | React.ReactNode }>>([
@@ -361,6 +428,153 @@ function App() {
               <span key={db} className="border-2 border-black bg-neoCyan font-bold px-2 py-0.5 text-xs shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">{db}</span>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  const renderCassetteTapeDeck = () => (
+    <section className="neo-card bg-neoOrange p-6 hidden lg:block">
+      <div className="flex items-center justify-between border-b-4 border-black pb-2 mb-4">
+        <h2 className="text-2xl font-bold uppercase flex items-center gap-2">
+          📟 Retro Tape Deck
+        </h2>
+        {/* Blinking Power Light */}
+        <div className="flex items-center gap-1">
+          <span className={`w-3.5 h-3.5 rounded-full border-2 border-black ${
+            isPlaying ? 'bg-red-500 animate-pulse' : 'bg-red-950'
+          }`}></span>
+          <span className="text-[10px] font-extrabold uppercase font-mono">LIVE</span>
+        </div>
+      </div>
+
+      <audio 
+        ref={audioRef}
+        src={tapeTracks[currentTrackIndex].url}
+        onEnded={handleAudioEnded}
+      />
+
+      <div className="flex flex-col gap-4">
+        {/* Cassette Tape Object */}
+        <div className="bg-zinc-800 border-4 border-black p-4 rounded-xl relative shadow-neo select-none">
+          {/* Label Card */}
+          <div className="bg-white border-2 border-black p-3 flex flex-col justify-between text-center min-h-[90px] relative">
+            <div className="text-[9px] font-mono font-extrabold text-zinc-500 uppercase tracking-widest border-b border-zinc-200 pb-1 flex items-center justify-between">
+              <span>TDK D90</span>
+              <span className="text-black">BAIZ1D MIX TAPE VOL. 1</span>
+              <span>NR [B]</span>
+            </div>
+            
+            <div className="my-2 font-mono">
+              <div className="text-xs font-black text-black uppercase truncate">
+                {tapeTracks[currentTrackIndex].title}
+              </div>
+              <div className="text-[10px] text-zinc-600 font-bold uppercase truncate">
+                {tapeTracks[currentTrackIndex].artist}
+              </div>
+            </div>
+
+            <div className="text-[8px] font-mono font-extrabold text-zinc-400 text-right mt-1">
+              SIDE A
+            </div>
+          </div>
+
+          {/* Spindle & Reel Window */}
+          <div className="bg-zinc-950 border-4 border-black h-16 my-3 relative flex items-center justify-around overflow-hidden rounded-lg shadow-inner">
+            {/* Visual Tape Strip Background */}
+            <div className="absolute inset-x-8 h-1 bg-amber-900/60 top-1/2 -translate-y-1/2"></div>
+            
+            {/* Left Reel */}
+            <div className={`w-9 h-9 rounded-full border-2 border-black bg-zinc-700 relative flex items-center justify-center shadow-lg ${
+              isPlaying ? (isFastForwarding ? "animate-tape-spin-fast" : "animate-tape-spin") : ""
+            }`}>
+              {/* Outer sprocket spokes */}
+              <div className="absolute inset-0.5 rounded-full border border-dashed border-zinc-500"></div>
+              {/* Center hole with gear teeth */}
+              <div className="w-5 h-5 rounded-full border border-black bg-zinc-900 flex items-center justify-center">
+                <div className="w-3.5 h-3.5 rounded-full border border-dashed border-zinc-400 bg-black"></div>
+              </div>
+            </div>
+
+            {/* Middle Status Indicator Light */}
+            <div className="flex flex-col items-center justify-center z-10">
+              <span className={`w-2.5 h-2.5 rounded-full border border-black ${
+                isPlaying ? 'bg-green-400' : 'bg-zinc-600'
+              }`}></span>
+              <span className="text-[8px] font-mono text-zinc-500 font-extrabold mt-1 uppercase">
+                {isPlaying ? 'PLAY' : 'STOP'}
+              </span>
+            </div>
+
+            {/* Right Reel */}
+            <div className={`w-9 h-9 rounded-full border-2 border-black bg-zinc-700 relative flex items-center justify-center shadow-lg ${
+              isPlaying ? (isFastForwarding ? "animate-tape-spin-fast" : "animate-tape-spin") : ""
+            }`}>
+              <div className="absolute inset-0.5 rounded-full border border-dashed border-zinc-500"></div>
+              <div className="w-5 h-5 rounded-full border border-black bg-zinc-900 flex items-center justify-center">
+                <div className="w-3.5 h-3.5 rounded-full border border-dashed border-zinc-400 bg-black"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Cassette Controls Row */}
+        <div className="grid grid-cols-3 gap-2 text-xs font-extrabold font-mono">
+          <button 
+            onClick={handlePlayPause}
+            className={`neo-btn py-2.5 border-2 text-center flex items-center justify-center gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-100 ${
+              isPlaying ? 'bg-neoYellow text-black' : 'bg-neoGreen text-black'
+            }`}
+            title={isPlaying ? 'Pause' : 'Play'}
+          >
+            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+            {isPlaying ? 'PAUSE' : 'PLAY'}
+          </button>
+          
+          <button 
+            onClick={handleStop}
+            className="neo-btn py-2.5 bg-red-400 text-black border-2 text-center flex items-center justify-center gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-100"
+            title="Stop & Rewind"
+          >
+            <Square size={14} />
+            STOP
+          </button>
+          
+          <button 
+            onClick={handleNextTrack}
+            className="neo-btn py-2.5 bg-neoCyan text-black border-2 text-center flex items-center justify-center gap-1.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all duration-100"
+            title="Next Track"
+            disabled={isFastForwarding}
+          >
+            <SkipForward size={14} />
+            NEXT
+          </button>
+        </div>
+
+        {/* Audio Volume Controls Card */}
+        <div className="flex items-center gap-3 bg-white border-2 border-black p-3 shadow-[2px_2px_0_0_rgba(0,0,0,1)] font-mono text-xs">
+          <button 
+            onClick={() => setIsMuted(!isMuted)}
+            className="hover:text-neoCyan active:scale-95 transition-transform flex items-center justify-center"
+            title={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+          </button>
+          <input 
+            type="range" 
+            min="0" 
+            max="1" 
+            step="0.05" 
+            value={volume} 
+            onChange={(e) => {
+              setVolume(parseFloat(e.target.value));
+              if (isMuted) setIsMuted(false);
+            }}
+            className="w-full accent-black cursor-pointer bg-zinc-200 h-2.5 border border-black rounded-none appearance-none"
+          />
+          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-tight shrink-0">
+            {isMuted ? 'MUTED' : `${Math.round(volume * 100)}%`}
+          </span>
         </div>
       </div>
     </section>
@@ -765,6 +979,7 @@ function App() {
             {renderLanguages()}
             {renderHonors()}
             {renderTechStack()}
+            {renderCassetteTapeDeck()}
           </div>
           {/* Right Column (2/3 width): Main contents */}
           <div className="col-span-2 flex flex-col gap-8">

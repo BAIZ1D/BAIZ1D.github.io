@@ -42,3 +42,17 @@
   width: max-content;
   animation: marquee 30s linear infinite;
 }
+
+@keyframes spin-clockwise {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-tape-spin {
+  animation: spin-clockwise 4s linear infinite;
+}
+
+.animate-tape-spin-fast {
+  animation: spin-clockwise 1s linear infinite;
+}
+
