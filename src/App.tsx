@@ -50,16 +50,12 @@ function App() {
   const [terminalInput, setTerminalInput] = useState('');
   const [terminalState, setTerminalState] = useState<'main' | 'projects'>('main');
 
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const terminalScrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (consoleTab === 'terminal') {
-      // Small timeout to ensure DOM renders before scrolling
-      const timer = setTimeout(() => {
-        terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 50);
-      return () => clearTimeout(timer);
+    if (consoleTab === 'terminal' && terminalScrollRef.current) {
+      terminalScrollRef.current.scrollTop = terminalScrollRef.current.scrollHeight;
     }
   }, [terminalLogs, consoleTab]);
 
@@ -477,13 +473,12 @@ function App() {
                 className="bg-zinc-950 text-emerald-400 font-mono text-xs md:text-sm p-5 h-[340px] flex flex-col justify-between cursor-text"
                 onClick={() => inputRef.current?.focus()}
               >
-                <div className="overflow-y-auto pr-1 flex-1 flex flex-col gap-1.5 scrollbar-thin scrollbar-thumb-zinc-800">
+                <div ref={terminalScrollRef} className="overflow-y-auto pr-1 flex-1 flex flex-col gap-1.5 scrollbar-thin scrollbar-thumb-zinc-800">
                   {terminalLogs.map((log, idx) => (
                     <div key={idx} className={log.type === 'input' ? 'text-white' : 'text-emerald-400 whitespace-pre-wrap leading-relaxed'}>
                       {log.text}
                     </div>
                   ))}
-                  <div ref={terminalEndRef} />
                 </div>
                 
                 <form onSubmit={handleTerminalSubmit} className="flex items-center gap-2 mt-3 pt-3 border-t border-zinc-800 shrink-0">
