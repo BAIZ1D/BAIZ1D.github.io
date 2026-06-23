@@ -60,7 +60,19 @@ function App() {
     { title: "Retro Synthwave Loop", artist: "Helix Synth", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
     { title: "8-Bit Adventure", artist: "Helix Chip", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
     { title: "Cyberpunk Highway", artist: "Helix Drive", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
-    { title: "Neo-Tokyo Night", artist: "Helix Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" }
+    { title: "Neo-Tokyo Night", artist: "Helix Beats", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+    { title: "Dreamwave Breeze", artist: "Helix Shore", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+    { title: "Grid Runner", artist: "Helix Vector", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
+    { title: "Outrun Sunrise", artist: "Helix Turbo", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
+    { title: "Chiptune Odyssey", artist: "Helix Retro", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+    { title: "Vaporwave Mall", artist: "Helix Echo", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" },
+    { title: "Digital Horizon", artist: "Helix Laser", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" },
+    { title: "Neon Skyline", artist: "Helix Glow", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3" },
+    { title: "Laser Grid", artist: "Helix Phaser", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3" },
+    { title: "Cyber Sunset", artist: "Helix Dusk", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3" },
+    { title: "Pixel Journey", artist: "Helix Arcade", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3" },
+    { title: "Future Funk", artist: "Helix Groove", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3" },
+    { title: "System Overload", artist: "Helix Core", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3" }
   ];
 
   useEffect(() => {
