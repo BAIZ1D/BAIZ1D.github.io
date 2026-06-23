@@ -1004,9 +1004,36 @@ function App() {
               {renderHonors()}
               {renderTechStack()}
             </div>
-            {/* Dynamic spacer that expands to fill extra space when the right column grows */}
-            <div className="flex-grow min-h-[32px]"></div>
-            <div className="mt-8">
+            {/* Dynamic visualizer spacer that expands to fill extra space when the right column grows */}
+            <div className="flex-grow min-h-[96px] border-4 border-black bg-zinc-950 my-8 shadow-neo overflow-hidden relative flex flex-col justify-end p-4 rounded-xl select-none">
+              {/* Retro digital grid background */}
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:12px_12px] opacity-40"></div>
+              
+              {/* Header inside screen */}
+              <div className="absolute top-2 left-3 right-3 flex items-center justify-between font-mono text-[9px] font-extrabold select-none z-10">
+                <span className="text-neoGreen tracking-widest animate-pulse">✦ MIXTAPE SPECTRAL ANALYZER ✦</span>
+                <span className={isPlaying ? "text-neoYellow" : "text-zinc-600"}>
+                  {isPlaying ? "SIGNAL: ACTIVE" : "SIGNAL: STBY"}
+                </span>
+              </div>
+
+              {/* Graphical Equalizer Bars */}
+              <div className="flex items-end justify-between h-full w-full gap-[3px] z-10 pt-4">
+                {[1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5].map((aniGroup, index) => {
+                  const restingHeights = ["h-[15%]", "h-[35%]", "h-[25%]", "h-[45%]", "h-[10%]"];
+                  return (
+                    <div 
+                      key={index} 
+                      className={`flex-1 bg-gradient-to-t from-neoGreen via-neoYellow to-neoOrange border border-black shadow-[1px_1px_0_0_rgba(0,0,0,1)] transition-all duration-300 ${
+                        isPlaying ? `animate-eq-${aniGroup}` : `${restingHeights[index % 5]}`
+                      }`}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
               {renderCassetteTapeDeck()}
             </div>
           </div>
