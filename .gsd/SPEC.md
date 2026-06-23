@@ -13,11 +13,15 @@ This specification outlines the completed and planned changes to BAIZ1D's person
    - Swapped `scrollIntoView()` with a scoped `scrollTop` assignment on `terminalScrollRef` to contain scrolling strictly inside the shell.
 
 ## Planned Tasks
-### 5. Responsive Mobile Grid Order Fix
-- **Problem**: On mobile devices and small screen viewports, the Left Column (Connect, Education, Languages, Honors, Stack) renders *above* the Right Column (About Me, Projects, Publications, Experience) because it is defined first in the HTML. However, the "About Me" section should be the primary, most visible element on mobile as well.
-- **Cause**: Standard CSS Grid renders children sequentially in 1-column layouts.
+### 5. Responsive Mobile Grid Order Fix (React Render Approach)
+- **Objective**: On mobile viewports, stack elements in the exact sequence:
+  1. About Me
+  2. Connect, Education, Languages, Honors, Technical Stack (Sidebar details)
+  3. Projects Portfolio, Publications & Datasets, Professional Experience (Main content)
+- **Constraint**: On desktop, maintain two clean columns: sidebar details stacked tightly on the left, main content stacked tightly on the right, without large empty vertical row gaps.
 - **Solution**:
-  - Apply Tailwind responsive flexbox/grid ordering classes (`order-x`) to the layout columns.
-  - Left Column (Sidebar details): Add `order-2 lg:order-1`.
-  - Right Column (About Me & Main content): Add `order-1 lg:order-2`.
-  - This forces the main content (About Me, Projects, Experience) to render at the top on mobile, while retaining the correct multi-column layout on desktop.
+  - Encapsulate the individual sections into local render functions inside the `App` component function closure (e.g. `renderAboutMe`, `renderConnect`, `renderProjects`, etc.). This preserves direct access to react states.
+  - Implement two responsive container layouts inside the main render block:
+    - **Desktop Layout (`hidden lg:grid`)**: Renders two columns containing the sections in their original desktop positions (Sidebar left, Main right).
+    - **Mobile Layout (`flex flex-col lg:hidden`)**: Renders sections in the exact sequential order requested.
+  - This provides a robust, responsive solution with no visual layout gaps on desktop and perfect ordering on mobile devices.
