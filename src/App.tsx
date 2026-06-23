@@ -1003,6 +1003,7 @@ function App() {
               {renderLanguages()}
               {renderHonors()}
               {renderTechStack()}
+              {renderCassetteTapeDeck()}
             </div>
             {/* Dynamic visualizer spacer that expands to fill extra space when the right column grows */}
             <div className="flex-grow min-h-[96px] border-4 border-black bg-zinc-950 my-8 shadow-neo overflow-hidden relative flex flex-col justify-end p-4 rounded-xl select-none">
@@ -1031,10 +1032,6 @@ function App() {
                   );
                 })}
               </div>
-            </div>
-
-            <div>
-              {renderCassetteTapeDeck()}
             </div>
           </div>
           {/* Right Column (2/3 width): Main contents */}
