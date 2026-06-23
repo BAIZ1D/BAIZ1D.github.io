@@ -2,7 +2,7 @@
 
 Personal portfolio website and dynamic CV generator built for Baizid Al Hamid. High-contrast Neo-Brutalist design that showcases professional experience, projects, and publications, with integrated print stylesheet overrides to generate standard 1-page resume PDFs directly from the web layout.
 
-Live site: https://baiz1d.github.io/
+Live site: https://baizidalhamid.dpdns.org/
 
 ## Features
 
