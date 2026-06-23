@@ -296,7 +296,7 @@ function App() {
       <main className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 print:hidden">
         
         {/* Left Column: Profile Card + Tech Stack */}
-        <div className="lg:col-span-1 flex flex-col gap-8">
+        <div className="lg:col-span-1 flex flex-col gap-8 order-2 lg:order-1">
           
           {/* Contact & Links */}
           <section className="neo-card bg-white p-6">
@@ -436,7 +436,7 @@ function App() {
         </div>
 
         {/* Right Columns: Projects & Research Publications & Experience */}
-        <div className="lg:col-span-2 flex flex-col gap-8">
+        <div className="lg:col-span-2 flex flex-col gap-8 order-1 lg:order-2">
           
           {/* About Me (Console Window style) */}
           <section className="neo-card neo-card-hover bg-white overflow-hidden">

@@ -9,13 +9,15 @@ This specification outlines the completed and planned changes to BAIZ1D's person
    - Created the About Me console window with retro OS buttons and the 3-pillar engineering breakdown cards.
 3. **Interactive Command Console Terminal**:
    - Implemented toggle tabs and the matrix-themed command shell interpreter with help/projects/contact/clear logic.
+4. **Fix Terminal Viewport Jump Bug**:
+   - Swapped `scrollIntoView()` with a scoped `scrollTop` assignment on `terminalScrollRef` to contain scrolling strictly inside the shell.
 
-## Planned Tasks & Bug Fixes
-### 4. Fix Terminal Viewport Jump Bug (Active)
-- **Problem**: Switching to the terminal tab or typing a command triggers a browser-wide viewport scroll (the page jumps down slightly).
-- **Cause**: The current scroll logic uses `element.scrollIntoView()`, which scrolls the browser window to align the terminal text in the viewport.
+## Planned Tasks
+### 5. Responsive Mobile Grid Order Fix
+- **Problem**: On mobile devices and small screen viewports, the Left Column (Connect, Education, Languages, Honors, Stack) renders *above* the Right Column (About Me, Projects, Publications, Experience) because it is defined first in the HTML. However, the "About Me" section should be the primary, most visible element on mobile as well.
+- **Cause**: Standard CSS Grid renders children sequentially in 1-column layouts.
 - **Solution**:
-  - Replace the global `scrollIntoView()` call.
-  - Implement a container-scoped `ref` (`terminalScrollRef`) on the scrollable terminal list element.
-  - Programmatically set `terminalScrollRef.current.scrollTop = terminalScrollRef.current.scrollHeight` inside the `useEffect` hook.
-  - This ensures that only the terminal buffer container scrolls, leaving the main browser window entirely static.
+  - Apply Tailwind responsive flexbox/grid ordering classes (`order-x`) to the layout columns.
+  - Left Column (Sidebar details): Add `order-2 lg:order-1`.
+  - Right Column (About Me & Main content): Add `order-1 lg:order-2`.
+  - This forces the main content (About Me, Projects, Experience) to render at the top on mobile, while retaining the correct multi-column layout on desktop.
