@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import profileImg from './assets/profile.jpg';
 import { 
   Mail, 
@@ -41,6 +41,108 @@ function App() {
   const [activeExpTab, setActiveExpTab] = useState<'it' | 'teaching' | 'hospitality' | 'all'>('it');
   const [copied, setCopied] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+
+  const [consoleTab, setConsoleTab] = useState<'overview' | 'terminal'>('overview');
+  const [terminalLogs, setTerminalLogs] = useState<Array<{ type: 'input' | 'output'; text: string | React.ReactNode }>>([
+    { type: 'output', text: "Welcome to Baizid's Interactive Terminal shell." },
+    { type: 'output', text: "Type 'help' to see list of available commands." }
+  ]);
+  const [terminalInput, setTerminalInput] = useState('');
+  const [terminalState, setTerminalState] = useState<'main' | 'projects'>('main');
+
+  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (consoleTab === 'terminal') {
+      // Small timeout to ensure DOM renders before scrolling
+      const timer = setTimeout(() => {
+        terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [terminalLogs, consoleTab]);
+
+  const handleTerminalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const cmd = terminalInput.trim().toLowerCase();
+    if (!cmd) return;
+
+    const newLogs: Array<{ type: 'input' | 'output'; text: string | React.ReactNode }> = [
+      ...terminalLogs,
+      { type: 'input', text: `guest@baizid.dev:~$ ${terminalInput}` }
+    ];
+
+    if (terminalState === 'projects') {
+      if (cmd === '1') {
+        window.open('https://github.com/BAIZ1D/yterm', '_blank');
+        newLogs.push({ type: 'output', text: 'Opening yterm source repository in a new tab...' });
+        setTerminalState('main');
+      } else if (cmd === '2') {
+        window.open('https://github.com/BAIZ1D/petition-legislation-matching', '_blank');
+        newLogs.push({ type: 'output', text: 'Opening petition-legislation-matching repository in a new tab...' });
+        setTerminalState('main');
+      } else if (cmd === '3') {
+        window.open('https://www.baito-tracker.work', '_blank');
+        newLogs.push({ type: 'output', text: 'Opening BaitoTracker live application in a new tab...' });
+        setTerminalState('main');
+      } else if (cmd === 'back') {
+        newLogs.push({ type: 'output', text: 'Returned to main shell prompt.' });
+        setTerminalState('main');
+      } else {
+        newLogs.push({ type: 'output', text: 'Invalid option. Select 1, 2, 3, or type "back".' });
+      }
+    } else {
+      if (cmd === 'help') {
+        newLogs.push({ 
+          type: 'output', 
+          text: (
+            <span>
+              Available commands:<br />
+              &nbsp;&nbsp;<strong className="text-neoYellow">projects</strong> - Lists active repositories and SaaS links<br />
+              &nbsp;&nbsp;<strong className="text-neoCyan">contact</strong>  - Show developer contact information<br />
+              &nbsp;&nbsp;<strong className="text-neoOrange">clear</strong>    - Clear terminal buffer
+            </span>
+          )
+        });
+      } else if (cmd === 'projects') {
+        setTerminalState('projects');
+        newLogs.push({
+          type: 'output',
+          text: (
+            <span>
+              Select a project link to open:<br />
+              &nbsp;&nbsp;[1] yterm (GitHub public repo)<br />
+              &nbsp;&nbsp;[2] petition-legislation-matching (GitHub public repo)<br />
+              &nbsp;&nbsp;[3] BaitoTracker (Live SaaS Application)<br />
+              Type the number (1-3) to visit, or type <strong className="text-neoOrange">back</strong> to cancel.
+            </span>
+          )
+        });
+      } else if (cmd === 'contact') {
+        newLogs.push({
+          type: 'output',
+          text: (
+            <span>
+              Contact info:<br />
+              &nbsp;&nbsp;Email: <a href="mailto:baizid.al.hamid@gmail.com" className="underline hover:text-neoCyan">baizid.al.hamid@gmail.com</a><br />
+              &nbsp;&nbsp;Phone: +81-90-5683-2771<br />
+              &nbsp;&nbsp;LinkedIn: <a href="https://www.linkedin.com/in/baizidalhamid" target="_blank" rel="noreferrer" className="underline hover:text-neoCyan">linkedin.com/in/baizidalhamid</a>
+            </span>
+          )
+        });
+      } else if (cmd === 'clear') {
+        setTerminalLogs([]);
+        setTerminalInput('');
+        return;
+      } else {
+        newLogs.push({ type: 'output', text: `Command not found: '${cmd}'. Type 'help' for options.` });
+      }
+    }
+
+    setTerminalLogs(newLogs);
+    setTerminalInput('');
+  };
 
   const currentYear = new Date().getFullYear();
   const isGraduated = new Date() >= new Date('2028-04-01');
@@ -343,55 +445,100 @@ function App() {
           {/* About Me (Console Window style) */}
           <section className="neo-card neo-card-hover bg-white overflow-hidden">
             {/* Windows Console Title Bar */}
-            <div className="bg-black text-white px-4 py-2 flex items-center justify-between border-b-4 border-black font-mono text-xs">
-              <div className="flex items-center gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-red-500 border border-black"></span>
-                <span className="w-3 h-3 rounded-full bg-yellow-500 border border-black"></span>
-                <span className="w-3 h-3 rounded-full bg-green-500 border border-black"></span>
+            <div className="bg-black text-white px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b-4 border-black font-mono text-xs">
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-1.5">
+                  <span className="w-3 h-3 rounded-full bg-red-500 border border-black"></span>
+                  <span className="w-3 h-3 rounded-full bg-yellow-500 border border-black"></span>
+                  <span className="w-3 h-3 rounded-full bg-green-500 border border-black"></span>
+                </div>
+                <div className="font-bold tracking-wider select-none text-[10px] md:text-xs">guest@baizid.dev: ~/about</div>
               </div>
-              <div className="font-bold tracking-wider select-none text-[10px] md:text-xs">guest@baizid.dev: ~/about</div>
-              <div className="w-12"></div>
+              
+              {/* Tab Selector */}
+              <div className="flex border border-zinc-700 bg-zinc-900 p-0.5 rounded-none self-start sm:self-auto shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]">
+                {(['overview', 'terminal'] as const).map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setConsoleTab(tab)}
+                    className={`px-3 py-1 font-bold uppercase text-[9px] transition-colors ${
+                      consoleTab === tab ? 'bg-neoYellow text-black font-extrabold' : 'hover:bg-zinc-800 text-zinc-400'
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
             </div>
             
             {/* Console Content */}
-            <div className="p-6">
-              <h2 className="text-2xl font-bold uppercase mb-4 border-b-2 border-black pb-2 flex items-center gap-2">
-                About Me
-              </h2>
-              
-              <p className="text-sm font-semibold text-zinc-800 leading-relaxed mb-6">
-                Hello, I’m Baizid Al Hamid (Al / アル). I am a software engineer and researcher driven by a passion for solving complex problems through Artificial Intelligence and intuitive web systems. Currently pursuing my Master’s at Ritsumeikan University, I focus on the intersection of machine learning and practical application.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoYellow/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
-                  <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
-                    <Brain size={16} /> Engineering
-                  </div>
-                  <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
-                    Conducting AI & NLP research on legal text matching using LLMs and RAG-IR to align citizen petitions with legal statutes of a country.
-                  </p>
+            {consoleTab === 'terminal' ? (
+              <div 
+                className="bg-zinc-950 text-emerald-400 font-mono text-xs md:text-sm p-5 h-[340px] flex flex-col justify-between cursor-text"
+                onClick={() => inputRef.current?.focus()}
+              >
+                <div className="overflow-y-auto pr-1 flex-1 flex flex-col gap-1.5 scrollbar-thin scrollbar-thumb-zinc-800">
+                  {terminalLogs.map((log, idx) => (
+                    <div key={idx} className={log.type === 'input' ? 'text-white' : 'text-emerald-400 whitespace-pre-wrap leading-relaxed'}>
+                      {log.text}
+                    </div>
+                  ))}
+                  <div ref={terminalEndRef} />
                 </div>
+                
+                <form onSubmit={handleTerminalSubmit} className="flex items-center gap-2 mt-3 pt-3 border-t border-zinc-800 shrink-0">
+                  <span className="text-white select-none font-bold">guest@baizid.dev:~$</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={terminalInput}
+                    onChange={(e) => setTerminalInput(e.target.value)}
+                    className="flex-1 bg-transparent border-none outline-none focus:ring-0 text-white p-0 m-0 select-text caret-emerald-400 font-mono"
+                    placeholder="type 'help'..."
+                    autoFocus
+                  />
+                </form>
+              </div>
+            ) : (
+              <div className="p-6">
+                <h2 className="text-2xl font-bold uppercase mb-4 border-b-2 border-black pb-2 flex items-center gap-2">
+                  About Me
+                </h2>
+                
+                <p className="text-sm font-semibold text-zinc-800 leading-relaxed mb-6">
+                  Hello, I’m Baizid Al Hamid (Al / アル). I am a software engineer and researcher driven by a passion for solving complex problems through Artificial Intelligence and intuitive web systems. Currently pursuing my Master’s at Ritsumeikan University, I focus on the intersection of machine learning and practical application.
+                </p>
 
-                <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoCyan/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
-                  <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
-                    <Layers size={16} /> SaaS Dev
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoYellow/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+                    <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
+                      <Brain size={16} /> Engineering
+                    </div>
+                    <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
+                      Conducting AI & NLP research on legal text matching using LLMs and RAG-IR to align citizen petitions with legal statutes of a country.
+                    </p>
                   </div>
-                  <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
-                    Full-lifecycle developer of BaitoTracker, a SaaS application helping international students in Japan track and optimize part-time income.
-                  </p>
-                </div>
 
-                <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoOrange/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
-                  <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
-                    <Briefcase size={16} /> Hospitality
+                  <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoCyan/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+                    <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
+                      <Layers size={16} /> SaaS Dev
+                    </div>
+                    <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
+                      Full-lifecycle developer of BaitoTracker, a SaaS application helping international students in Japan track and optimize part-time income.
+                    </p>
                   </div>
-                  <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
-                    Refined my professional ethos by working at luxury hotels around Japan. Thus, approaching software with a detail-oriented and user-first mindset.
-                  </p>
+
+                  <div className="border-2 border-black p-3.5 bg-zinc-50 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:bg-neoOrange/15 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
+                    <div className="font-extrabold text-sm uppercase mb-1.5 flex items-center gap-1.5">
+                      <Briefcase size={16} /> Hospitality
+                    </div>
+                    <p className="text-xs text-zinc-700 font-semibold leading-relaxed">
+                      Refined my professional ethos by working at luxury hotels around Japan. Thus, approaching software with a detail-oriented and user-first mindset.
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </section>
 
           {/* Projects Section */}
