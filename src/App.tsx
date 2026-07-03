@@ -381,6 +381,10 @@ function App() {
         <Award size={22} /> Honors & Awards
       </h2>
       <div className="flex flex-col gap-3 font-semibold text-xs text-zinc-700">
+        <div className="border-l-4 border-neoGreen pl-2 py-1">
+          <span className="font-extrabold text-black">NITORI International Scholarship</span><br/>
+          似鳥国際奨学財団 奨学金 — Nitori International Scholarship Foundation (公益財団法人 似鳥国際奨学財団)
+        </div>
         <div className="border-l-4 border-neoYellow pl-2 py-1">
           <span className="font-extrabold text-black">JASSO Scholarship</span><br/>
           日本学生支援機構奨学金
