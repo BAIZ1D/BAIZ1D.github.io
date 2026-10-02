@@ -223,12 +223,13 @@ function App() {
   const isGraduated = new Date() >= new Date('2028-04-01');
   const masterPeriod = isGraduated ? 'April 2026 - April 2028' : 'April 2026 - Present (Expected April 2028)';
 
-  const bibtexCitation = `@inproceedings{alhamid2026automating,
-  title={Automating Legal Statute Matching in Online Petition Systems},
-  author={Al Hamid, Baizid and Kovacs, Mate and Salama, Shady and Serd{\\u}lt, Uwe},
-  booktitle={Proceedings of the International Conference on eDemocracy \\& eGovernment (ICEDEG)},
+  const bibtexCitation = `@INPROCEEDINGS{11695534,
+  author={Al Hamid, Baizid and Salama, Shady and Kovacs, Mate and Serdült, Uwe},
+  booktitle={2026 Twelfth International Conference on eDemocracy & eGovernment (ICEDEG)}, 
+  title={Automating Legal Statute Matching in Online Petition Systems}, 
   year={2026},
-  note={Accepted for publication. To appear.}
+  pages={356-363},
+  doi={10.1109/ICEDEG70169.2026.11695534}
 }`;
 
   const copyToClipboard = (text: string, type: 'bibtex' | 'email') => {
